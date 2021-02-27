@@ -1,3 +1,26 @@
+<?php 
+
+  function sanitize($data) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+  }
+
+  $firstname = $lastname = $number = $email = "";
+  $gender = $age = "";
+
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $firstname = sanitize($_POST['firstname']);
+    $lastname = sanitize($_POST['lastname']);
+    $number = sanitize($_POST['number']);
+    $email = sanitize($_POST['email']);
+    $gender = sanitize($_POST['gender']);
+    $age = sanitize($_POST['age']);
+  }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,10 +39,10 @@
     <div class="card">
       <div class="card-header"></div>
       <div class="card-body">
-        <form action="<?php $_SERVER['PHP_SELF']; ?>" method="post">
+        <form action="<?php $_SERVER['PHP_SELF'];?>" method="post">
           <div class="row">
             <div class="form-group col-md-6 mb-2">
-              <input type="text" class="form-control" placeholder="Firstname" value="<?= $firstname; ?>" />
+              <input type="text" class="form-control" name="firstname" placeholder="Firstname" value="<?= $firstname; ?>" />
             </div>
             <div class="form-group col-md-6 mb-2">
               <input type="text" class="form-control" name="lastname" placeholder="Lastname" value="<?= $lastname; ?>" />
@@ -28,7 +51,7 @@
 
           <div class="row">
             <div class="form-group col-md-6 mb-2">
-              <input type="text" class="form-control" placeholder="Phone No" value="<?= $number; ?>" />
+              <input type="text" class="form-control" name="number" placeholder="Phone No" value="<?= $number; ?>" />
             </div>
             <div class="form-group col-md-6 mb-2">
               <input type="email" class="form-control" name="email" placeholder="Email" value="<?= $email; ?>" />
@@ -38,8 +61,8 @@
           <div class="row">
             <div class="col-6 form-group">
               <label for="">Gender: </label>
-              <input type="radio" class="" name="gender" value="male" <?php isset($gender) && $gender == "male" ? "checked" : ""; ?>/> Male
-              <input type="radio" class="" name="gender" value="female" <?php isset($gender) && $gender == "female" ? "checked" : ""; ?>/> Female
+              <input type="radio" name="gender" value="Male" <?php isset($gender) && $gender == "male" ? "checked" : ""; ?>/> Male
+              <input type="radio" name="gender" value="Female" <?php isset($gender) && $gender == "female" ? "checked" : ""; ?>/> Female
             </div>
             <div class="col-6 form-group">
               <label for="age">Age: </label>
@@ -58,6 +81,22 @@
         </form>
       </div>
 
+
+      <div class="card-footer">
+      <?php
+        echo "<h2>Your Input:</h2>";
+        echo $firstname . ' ' . $lastname;
+        echo "<br>";
+        echo $number;
+        echo "<br>";
+        echo $email;
+        echo "<br>";
+        echo $gender;
+        echo "<br>";
+        echo $age;
+        ?>
+      </div>
+    </div>
       
   </main>
 
